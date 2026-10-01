@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>Gallery — Hello, World!</title>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; overflow-x: hidden; padding: 6rem 1rem 5rem; color: #f7f7ff; background: #0b1020; background-image: radial-gradient(ellipse at 18% 20%, #5434a866 0, transparent 36%), radial-gradient(ellipse at 82% 80%, #087f8c66 0, transparent 38%), linear-gradient(135deg, #0b1020, #111a30 60%, #0c1725); }
+    body::before, body::after { content: ""; position: fixed; z-index: -1; width: 24rem; height: 24rem; border-radius: 50%; filter: blur(80px); opacity: .22; pointer-events: none; animation: drift 12s ease-in-out infinite alternate; }
+    body::before { top: -12rem; right: 8%; background: #a855f7; } body::after { bottom: -15rem; left: 10%; background: #22d3ee; animation-delay: -5s; }
+    nav { position: fixed; z-index: 2; top: 1.4rem; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: .4rem; padding: .45rem; border: 1px solid #ffffff20; border-radius: 999px; background: #10172beF; backdrop-filter: blur(14px); box-shadow: 0 8px 30px #0004; }
+    nav a { padding: .65rem 1rem; border-radius: 999px; color: #c2c9da; text-decoration: none; font-size: .9rem; transition: color .2s, background .2s; }
+    nav a:hover, nav a[aria-current="page"] { color: #fff; background: #ffffff15; }
+    .wrap { position: relative; width: min(100%, 1050px); margin: 0 auto; animation: arrive .8s cubic-bezier(.2,.8,.2,1) both; }
+    header { margin: 1rem 0 2.4rem; text-align: center; }
+    .eyebrow { margin: 0 0 .8rem; color: #a5f3fc; font-size: .75rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(3rem, 9vw, 5.6rem); line-height: 1; letter-spacing: -.065em; }
+    h1 span { color: transparent; background: linear-gradient(90deg, #c4b5fd, #67e8f9); background-clip: text; -webkit-background-clip: text; }
+    header p:last-child { max-width: 34rem; margin: 1.2rem auto 0; color: #c2c9da; font-size: 1.05rem; line-height: 1.7; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    .card { overflow: hidden; border: 1px solid #ffffff22; border-radius: 22px; background: linear-gradient(145deg, #ffffff12, #ffffff05); box-shadow: 0 18px 50px #0003; backdrop-filter: blur(12px); transition: transform .25s, border-color .25s; }
+    .card:hover { transform: translateY(-5px); border-color: #ffffff50; }
+    .art { position: relative; display: grid; place-items: center; height: 190px; overflow: hidden; isolation: isolate; }
+    .art::before, .art::after { content: ""; position: absolute; z-index: -1; border-radius: 50%; filter: blur(1px); }
+    .art span { color: #ffffffdf; font-size: 3.8rem; text-shadow: 0 8px 35px #0005; }
+    .art-one { background: linear-gradient(135deg, #382264, #ab5cd1 55%, #ffb3ba); }
+    .art-one::before { width: 180px; height: 180px; background: #fac8ff99; top: -70px; right: -20px; }
+    .art-one::after { width: 130px; height: 130px; background: #ffd68b; bottom: -55px; left: 15%; }
+    .art-two { background: linear-gradient(145deg, #062c47, #087f8c 55%, #8be9d2); }
+    .art-two::before { width: 230px; height: 110px; background: #8cf4deaa; transform: rotate(-28deg); }
+    .art-two::after { width: 110px; height: 110px; background: #b3f7ff; top: 18px; right: 35px; }
+    .art-three { background: linear-gradient(145deg, #422131, #d94b74 52%, #ffc17a); }
+    .art-three::before { width: 160px; height: 160px; background: #ffdb9a; top: -80px; left: 30px; }
+    .art-three::after { width: 120px; height: 120px; background: #ff84a5; bottom: -60px; right: 25px; }
+    .art-four { background: linear-gradient(145deg, #183d3e, #38a88b 55%, #c5f28b); }
+    .art-four::before { width: 150px; height: 150px; background: #d3ff9c; left: -55px; bottom: -45px; }
+    .art-four::after { width: 120px; height: 120px; background: #9affd4; right: 15%; top: -55px; }
+    .art-five { background: linear-gradient(145deg, #202358, #5659c9 55%, #d5a4ff); }
+    .art-five::before { width: 190px; height: 190px; background: #b9a5ff99; top: -100px; right: 10%; }
+    .art-five::after { width: 130px; height: 130px; background: #f4bdff; bottom: -70px; left: 15%; }
+    .art-six { background: linear-gradient(145deg, #153047, #3275a2 55%, #8fe2ef); }
+    .art-six::before { width: 220px; height: 90px; background: #b8f7f2aa; transform: rotate(32deg); top: 20px; }
+    .art-six::after { width: 100px; height: 100px; background: #d5ffff; bottom: 20px; right: 18%; }
+    .caption { padding: 1rem 1.1rem 1.2rem; }
+    .caption h2 { margin: 0; font-size: 1.05rem; letter-spacing: -.02em; }
+    .caption p { margin: .4rem 0 0; color: #aeb8cd; font-size: .9rem; line-height: 1.55; }
+    footer { position: fixed; z-index: 1; bottom: 1.2rem; left: 50%; transform: translateX(-50%); color: #a2abc0; font-size: .72rem; letter-spacing: .08em; white-space: nowrap; }
+    @keyframes arrive { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes drift { to { transform: translate(45px, 35px) scale(1.12); } }
+    @media (max-width: 720px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .art { height: 165px; } }
+    @media (max-width: 480px) { body { padding-top: 5.5rem; } nav { gap: 0; padding: .35rem; } nav a { padding: .58rem .68rem; font-size: .78rem; } .grid { gap: .7rem; } .art { height: 135px; } .art span { font-size: 3rem; } .caption { padding: .8rem; } .caption h2 { font-size: .96rem; } .caption p { font-size: .82rem; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="gallery.html" aria-current="page">Gallery</a>
+  </nav>
+  <main class="wrap">
+    <header>
+      <p class="eyebrow">A collection of little wonders</p>
+      <h1>The <span>Gallery</span></h1>
+      <p>A few bright ideas, gathered in one place. Take a moment to explore the colors and shapes.</p>
+    </header>
+    <section class="grid" aria-label="Gallery collection">
+      <article class="card"><div class="art art-one" role="img" aria-label="Abstract lilac and peach shapes"><span aria-hidden="true">✦</span></div><div class="caption"><h2>First Light</h2><p>A bright beginning in soft, warm colors.</p></div></article>
+      <article class="card"><div class="art art-two" role="img" aria-label="Abstract ocean blue and mint shapes"><span aria-hidden="true">〰</span></div><div class="caption"><h2>Open Water</h2><p>Make room for ideas to drift and grow.</p></div></article>
+      <article class="card"><div class="art art-three" role="img" aria-label="Abstract coral and golden shapes"><span aria-hidden="true">✺</span></div><div class="caption"><h2>Golden Hour</h2><p>A little glow for the in-between moments.</p></div></article>
+      <article class="card"><div class="art art-four" role="img" aria-label="Abstract green and jade shapes"><span aria-hidden="true">❋</span></div><div class="caption"><h2>Fresh Growth</h2><p>Small steps can lead somewhere wonderful.</p></div></article>
+      <article class="card"><div class="art art-five" role="img" aria-label="Abstract violet and periwinkle shapes"><span aria-hidden="true">✧</span></div><div class="caption"><h2>Daydream</h2><p>Follow a thought wherever it might go.</p></div></article>
+      <article class="card"><div class="art art-six" role="img" aria-label="Abstract sky blue and aqua shapes"><span aria-hidden="true">◌</span></div><div class="caption"><h2>Clear Skies</h2><p>Here’s to the next thing you’ll create.</p></div></article>
+    </section>
+  </main>
+  <footer>MADE FOR THE BEGINNING</footer>
+</body>
+</html>
+
+
